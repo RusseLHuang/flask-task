@@ -11,7 +11,7 @@ RUN python3.7 -m pip install --no-cache-dir -r requirements.txt
 
 COPY config.py /app
 
-COPY config.ini /app
+COPY wsgi.py /app
 
 COPY wsgi.ini /app
 
