@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+  task-backend:
+    container_name: task-backend
+    build: .
+    ports:
+      - 5000:5000
+    volumes:
+      - wsgi-sock:/tmp
+  db:
+    container_name: task-database
+    image: mysql/mysql-server:8.0.23
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_USER: task_user
+      MYSQL_PASS: task_pw
+      MYSQL_DATABASE: task_db
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - task-db:/var/lib/mysql
+  test-db:
+    container_name: test-database
+    image: mysql/mysql-server:8.0.23
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_USER: task_user
+      MYSQL_PASS: task_pw
+      MYSQL_DATABASE: test_task_db
+      MYSQL_ROOT_HOST: "%"
+  nginx:
+    container_name: task-proxy
+    image: nginx:stable-alpine
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes: 
+      - wsgi-sock:/tmp
+volumes:
+  task-db:
+  wsgi-sock:
