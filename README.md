@@ -1,3 +1,8 @@
+# Install dependencies
+```
+pip install -r requirements.txt
+```
+
 # Run using docker compose
 
 Build local docker image
@@ -13,6 +18,9 @@ docker-compose up -d
 > Apply database migration after database is running: alembic upgrade head
 
 # Unit Test
+```
+pytest
+```
 
 # Migration Script
 
